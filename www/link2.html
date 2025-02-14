@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#2196f3">
+    <title>Captura de Imagem</title>
+    <link rel="stylesheet" href="css/personalizado.css">
+    <link rel="stylesheet" href="css/materialdesignicons.min.css">
+</head>
+
+<body>
+    <div class="page" data-name="camera">
+
+        <!-- Top Navbar -->
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner justify-content-center">
+                <div class="title">Captura de Imagem</div>
+            </div>
+        </div>
+
+        <!-- Página de Captura -->
+        <div class="page-content text-align-center">
+            <p>Carregue uma imagem para análise</p>
+            <input type="file" id="fileInput" accept="image/*">
+            <button class="button button-fill" onclick="processarImagem()">📤 Enviar Imagem</button>
+            <img id="previewImage" style="max-width: 100%; margin-top: 10px; display: none;">
+        </div>
+    </div>
+
+    <!-- Roteamento do app -->
+    <script type="text/javascript" src="js/routes.js"></script>
+</body>
+
+</html>

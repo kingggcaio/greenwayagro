@@ -1,0 +1,66 @@
+.toolbar{
+    height: 80px;
+}
+
+.tab-link{
+    display: flex;
+    justify-content: center;
+    flex-flow: column wrap;
+}
+
+.toolbar-inner .link{    
+    flex:1;
+    height: 80px;  
+    line-height: 25px; 
+	font-weight:bold;    
+}
+
+.toolbar-inner .link:not(.active){
+    color:gray;
+	font-weight:normal;
+}
+
+.toolbar-inner > .link i{
+    font-size: 28px;
+}
+
+/*ESTILIZAÇÃO PÁGINA DE RESULTADO*/
+/* 🔹 Container das imagens lado a lado */
+.resultado-container {
+    display: flex;
+    flex-direction: row; /* Mantém as imagens lado a lado */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Se o espaço for pequeno, quebra para baixo */
+    gap: 15px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* 🔹 Estilização das imagens */
+.resultado-container div {
+    text-align: center; /* Centraliza os textos abaixo das imagens */
+}
+
+.resultado-container img {
+    width: 45%; /* Cada imagem ocupa 45% do espaço */
+    max-width: 200px; /* Define um tamanho máximo */
+    height: auto;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    background: white;
+    object-fit: contain; /* Garante que a imagem não seja distorcida */
+}
+
+/* 🔹 Para telas menores, mantém as imagens empilhadas */
+@media screen and (max-width: 600px) {
+    .resultado-container {
+        flex-direction: column;
+    }
+
+    .resultado-container img {
+        width: 80%; /* Ajuste maior para telas pequenas */
+        max-width: 300px;
+    }
+}

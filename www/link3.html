@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#2196f3">
+    <title>Resultados</title>
+    <link rel="stylesheet" href="css/personalizado.css">
+    <link rel="stylesheet" href="css/materialdesignicons.min.css">
+    
+    <style>
+        .resultado-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .resultado-container div {
+            text-align: center;
+            width: 45%;
+        }
+
+        .resultado-container img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 5px;
+            background: white;
+        }
+
+        /* Responsivo para telas menores */
+        @media (max-width: 600px) {
+            .resultado-container {
+                flex-direction: column;
+            }
+            .resultado-container div {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page" data-name="results">
+
+        <!-- Top Navbar -->
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner justify-content-center">
+                <div class="title">Resultados da Análise</div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Página -->
+        <div class="page-content text-align-center">
+            <h2>Resultado do Processamento</h2>
+            <p id="areaFolha">Carregando...</p>
+
+            <div class="resultado-container">
+                <!-- Imagem Original -->
+                <div>
+                    <p>Imagem Original</p>
+                    <img id="imagemOriginal">
+                </div>
+                <!-- Imagem Processada -->
+                <div>
+                    <p>Imagem Processada</p>
+                    <img id="imagemProcessada">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roteamento do app -->
+    <script type="text/javascript" src="js/routes.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("📢 Página de Resultados carregada!");
+            mostrarResultados();
+        });
+
+        function mostrarResultados() {
+            let imgOriginal = document.getElementById("imagemOriginal");
+            let imgProcessada = document.getElementById("imagemProcessada");
+            let textEl = document.getElementById("areaFolha");
+
+            // Recupera do localStorage
+            let imagemBase64 = localStorage.getItem("imagemBase64");
+            let imagemProcessada = localStorage.getItem("imagemProcessada");
+            let areaFoliar = localStorage.getItem("areaFoliar");  // <-- Nova chave para a área
+
+            // Se a imagem original existe, atribui e exibe
+            if (imagemBase64) {
+                imgOriginal.src = imagemBase64;
+            } else {
+                // Oculta caso não exista
+                imgOriginal.style.display = "none";
+            }
+
+            // Se a imagem processada existe, atribui e exibe
+            if (imagemProcessada) {
+                imgProcessada.src = imagemProcessada;
+            } else {
+                // Oculta caso não exista
+                imgProcessada.style.display = "none";
+            }
+
+            // Exibe o texto de status e, se houver, a área foliar
+            if (imagemBase64 && imagemProcessada) {
+                if (areaFoliar) {
+                    // Formata a área com 2 casas decimais
+                    let areaFormatada = parseFloat(areaFoliar).toFixed(2);
+                    textEl.innerText = "Processamento concluído!\nÁrea Foliar: " + areaFormatada + " cm²";
+                } else {
+                    textEl.innerText = "Processamento concluído!";
+                }
+            } else {
+                textEl.innerText = "❌ Erro: Nenhuma imagem encontrada!";
+            }
+        }
+    </script>
+
+</body>
+</html>
