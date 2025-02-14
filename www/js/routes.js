@@ -1,6 +1,4 @@
-// INICIALIZAÇÃO DO FRAMEWORK7 QUANDO O DISPOSITIVO ESTÁ PRONTO
-document.addEventListener('deviceready', onDeviceReady, false);
-
+// INICIALIZAÇÃO DO FRAMEWORK7
 var app = new Framework7({
   el: '#app',
   name: 'My App',
@@ -79,7 +77,8 @@ function processarImagem() {
   // Exibir carregamento antes do processamento
   app.dialog.preloader("Processando imagem...");
 
-  fetch("http://127.0.0.1:5000/processar", {
+  // ALTERE O IP AQUI 🔽 🔽 🔽 
+  fetch("http://192.168.X.X:5000/processar", {  // Substitua pelo IP correto do PC
     method: "POST",
     body: formData
   })
@@ -88,18 +87,14 @@ function processarImagem() {
     app.dialog.close(); // Fecha a tela de carregamento
 
     if (data.imagem_processada) {
-      // Salvar a imagem original usando URL.createObjectURL(file)
       localStorage.setItem("imagemBase64", URL.createObjectURL(file));
-      // Salvar a imagem processada com o prefixo adequado para exibição
       localStorage.setItem("imagemProcessada", "data:image/png;base64," + data.imagem_processada);
       
-      // Salvar também o valor da área foliar, se retornado pelo servidor
       if (data.area_foliar) {
         localStorage.setItem("areaFoliar", data.area_foliar);
       }
 
       console.log("Imagem processada recebida do servidor!");
-      // Redirecionar para a página de resultados
       app.views.main.router.navigate('/results/');
     } else {
       alert("Erro no processamento da imagem!");
@@ -120,18 +115,18 @@ function mostrarResultados() {
 
   let imagemBase64 = localStorage.getItem("imagemBase64");
   let imagemProcessada = localStorage.getItem("imagemProcessada");
-  let areaFoliar = localStorage.getItem("areaFoliar"); // Nova chave para a área
+  let areaFoliar = localStorage.getItem("areaFoliar");
 
   if (imagemBase64) {
     imgOriginal.src = imagemBase64;
-    imgOriginal.style.display = "block"; // Garante que a imagem seja exibida
+    imgOriginal.style.display = "block"; 
   } else {
     imgOriginal.style.display = "none";
   }
 
   if (imagemProcessada) {
     imgProcessada.src = imagemProcessada;
-    imgProcessada.style.display = "block"; // Garante que a imagem seja exibida
+    imgProcessada.style.display = "block"; 
   } else {
     imgProcessada.style.display = "none";
   }
@@ -145,21 +140,4 @@ function mostrarResultados() {
   } else {
     textEl.innerText = "Erro ao carregar as imagens!";
   }
-}
-
-// FUNÇÃO PARA GERENCIAR O BOTÃO VOLTAR NO ANDROID
-function onDeviceReady() {
-  var mainView = app.views.create('.view-main', { url: '/' });
-
-  document.addEventListener("backbutton", function (e) {
-    if (mainView.router.currentRoute.path === '/') {
-      e.preventDefault();
-      app.dialog.confirm('Deseja sair do aplicativo?', function () {
-        navigator.app.exitApp();
-      });
-    } else {
-      e.preventDefault();
-      mainView.router.back({ force: true });
-    }
-  }, false);
 }
